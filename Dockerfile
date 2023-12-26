@@ -1,18 +1,16 @@
-# Start with a base image containing Java runtime
-FROM openjdk:11-jdk-slim as build
+# Use a base image with Java 11
+FROM eclipse-temurin:17-jdk-alpine
 
 
-# Add a volume pointing to /tmp
+# Set a volume pointing to /tmp (optional)
 VOLUME /tmp
 
-# Make port 8080 available to the world outside this container
+
+# Copy the built JAR file into the container
+COPY target/*.jar app.jar
+
+# Execute the application
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+
+# Expose port 8080 for the application
 EXPOSE 8080
-
-# The application's jar file
-ARG JAR_FILE=target/*.jar
-
-# Add the application's jar to the container
-ADD ${JAR_FILE} app.jar
-
-# Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
