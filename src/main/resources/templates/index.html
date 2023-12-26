@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>License Plate Records</title>
+</head>
+<body>
+<h2>License Plate Records</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Plate Number</th>
+        <th>Driver Name</th>
+        <th>Time In</th>
+        <th>Time Out</th>
+    </tr>
+    </thead>
+    <tbody>
+    <script src="https://cdn.jsdelivr.net/sockjs/1.0.3/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <!-- Link to your WebSocket JavaScript file -->
+    <script src="/websocket.js"></script>
+
+
+    <tr th:each="licensePlate : ${licensePlates}">
+        <td th:text="${licensePlate.plateNumber}">Plate Number</td>
+        <td th:text="${licensePlate.driverName}">Driver Name</td>
+        <td th:text="${#temporals.format(licensePlate.timeIn, 'dd-MM-yyyy HH:mm:ss')}">Time In</td>
+        <td th:text="${#temporals.format(licensePlate.timeOut, 'dd-MM-yyyy HH:mm:ss')}">Time Out</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
